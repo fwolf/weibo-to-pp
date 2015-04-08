@@ -1,0 +1,38 @@
+{
+    "name": "fwolf/weibo-to-pp",
+    "description": "Receive HTTP POST from mailgun then post to coding pp",
+    "type": "project",
+    "keywords": [
+        "coding",
+        "http",
+        "mail",
+        "mailgun",
+        "maopao",
+        "post",
+        "pp"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Fwolf",
+            "email": "fwolf.aide+weibo-to-pp@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5",
+        "fwlib/fwlib": "dev-master",
+        "fwolf/coding-client": "^0.2"
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Fwolf\\Bin\\WeiboToPp\\": "src/WeiboToPp/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "FwolfTest\\Bin\\WeiboToPp\\": "tests/WeiboToPpTest/"
+        }
+    }
+}
