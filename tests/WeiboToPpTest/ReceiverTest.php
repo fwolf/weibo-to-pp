@@ -8,6 +8,8 @@ use Fwolf\Wrapper\PHPUnit\PHPUnitTestCase;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
 
 /**
+ * @SuppressWarnings(PHPMD.Superglobals)
+ *
  * @copyright   Copyright 2015 Fwolf
  * @license     http://opensource.org/licenses/MIT MIT
  */
@@ -24,6 +26,40 @@ class ReceiverTest extends PHPUnitTestCase
         );
 
         return $mock;
+    }
+
+
+    public function testGetImages()
+    {
+        $receiver = $this->buildMock();
+
+        $_FILES = [];
+        $this->assertEmpty($receiver->getImages());
+
+        $this->reflectionSet($receiver, 'contents', ['attachment-count' => 2]);
+        $_FILES = [
+            'attachment-1' => [
+                'name' => 'local-filename.png',
+                'type' => 'image/png',
+                'tmp_name' => '/tmp/1',
+                'error' => 0,
+                'size' => 2635,
+            ],
+            'attachment-2' => [
+                'name' => 'local-filename.png',
+                'type' => 'image/png',
+                'tmp_name' => '/tmp/2',
+                'error' => 0,
+                'size' => 2635,
+            ],
+        ];
+
+        $this->assertEqualArray(
+            ['/tmp/1', '/tmp/2'],
+            $receiver->getImages()
+        );
+
+        $_FILES = [];
     }
 
 
