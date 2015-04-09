@@ -40,7 +40,7 @@ class WeiboToPp
         $hashTag = GlobalConfig::getInstance()->get('weiboToPp.hashTag');
 
         if (!empty($hashTag)) {
-            $body = preg_replace("/#{$hashTag}[ #]/", '', $body);
+            $body = preg_replace("/#{$hashTag}[ #]/i", '', $body);
         }
 
         return $body;
@@ -61,7 +61,7 @@ class WeiboToPp
         }
 
         $hashTag = GlobalConfig::getInstance()->get('weiboToPp.hashTag');
-        if (!empty($hashTag) && 1 !== preg_match("/#{$hashTag}[ #]/", $body)) {
+        if (!empty($hashTag) && 1 !== preg_match("/#{$hashTag}[ #]/i", $body)) {
             return false;
         }
 

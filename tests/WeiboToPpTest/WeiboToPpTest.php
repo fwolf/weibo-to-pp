@@ -84,7 +84,7 @@ class WeiboToPpTest extends PHPUnitTestCase
         );
         $this->assertEquals(
             'foo  bar',
-            $this->reflectionCall($weiboToPp, 'decorate', ['foo #coding# bar'])
+            $this->reflectionCall($weiboToPp, 'decorate', ['foo #Coding# bar'])
         );
 
         $config->set('weiboToPp.hashTag', '');
@@ -119,7 +119,7 @@ class WeiboToPpTest extends PHPUnitTestCase
             $this->reflectionCall($weiboToPp, 'isSuitable', ['foo #coding bar', []])
         );
         $this->assertTrue(
-            $this->reflectionCall($weiboToPp, 'isSuitable', ['foo #coding#', []])
+            $this->reflectionCall($weiboToPp, 'isSuitable', ['foo #Coding#', []])
         );
 
         $config->set('weiboToPp.hashTag', '');
