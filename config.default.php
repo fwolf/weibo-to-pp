@@ -20,6 +20,7 @@ $config['weiboToPp.cookieFile'] = '/tmp/coding.txt';
 $config['weiboToPp.hashTag'] = 'coding';
 
 $config['weiboToPp.username'] = '';
+// Sha1 hash of real password
 $config['weiboToPp.password'] = '';
 
 return $config;
