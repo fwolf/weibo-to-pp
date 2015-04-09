@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fwolf/fwlib.git",
-                "reference": "e1e32cb96e409adcbe4c7c3d33b6107098c267c4"
+                "reference": "8da66f67c54137e858c14dc8dfcdc1472f694b28"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fwolf/fwlib/zipball/e1e32cb96e409adcbe4c7c3d33b6107098c267c4",
-                "reference": "e1e32cb96e409adcbe4c7c3d33b6107098c267c4",
+                "url": "https://api.github.com/repos/fwolf/fwlib/zipball/8da66f67c54137e858c14dc8dfcdc1472f694b28",
+                "reference": "8da66f67c54137e858c14dc8dfcdc1472f694b28",
                 "shasum": ""
             },
             "require": {
@@ -50,7 +50,7 @@
                 "fwlib",
                 "lib"
             ],
-            "time": "2015-04-07 09:01:32"
+            "time": "2015-04-09 15:18:13"
         },
         {
             "name": "fwolf/coding-client",
