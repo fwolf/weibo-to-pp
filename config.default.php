@@ -13,7 +13,13 @@
  * @license     http://opensource.org/licenses/MIT MIT
  */
 
+// Used by curl to store login status, should be writable by web server
+$config['weiboToPp.cookieFile'] = '/tmp/coding.txt';
+
 // Only post weibo have this hash tag, without '#', leave empty to post all
 $config['weiboToPp.hashTag'] = 'coding';
+
+$config['weiboToPp.username'] = '';
+$config['weiboToPp.password'] = '';
 
 return $config;
