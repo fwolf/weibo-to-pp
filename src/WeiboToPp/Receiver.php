@@ -31,7 +31,9 @@ class Receiver
      */
     public function getBody()
     {
-        return $this->contents['subject'];
+        $arrayUtil = $this->getUtilContainer()->getArray();
+
+        return $arrayUtil->getIdx($this->contents, 'subject');
     }
 
 
