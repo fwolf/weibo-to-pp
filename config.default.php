@@ -13,6 +13,7 @@
  * @license     http://opensource.org/licenses/MIT MIT
  */
 
-$config = [];
+// Only post weibo have this hash tag, without '#', leave empty to post all
+$config['weiboToPp.hashTag'] = 'coding';
 
 return $config;
