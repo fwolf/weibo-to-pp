@@ -50,6 +50,11 @@ class WeiboToPpTest extends PHPUnitTestCase
             $this->reflectionCall($weiboToPp, 'isSuitable', ['foo #coding#'])
         );
 
+        $config->set('weiboToPp.hashTag', '');
+        $this->assertTrue(
+            $this->reflectionCall($weiboToPp, 'isSuitable', ['foo bar'])
+        );
+
         $config->set('weiboToPp.hashTag', $hashTagBackup);
     }
 }
