@@ -103,24 +103,31 @@ class WeiboToPpTest extends PHPUnitTestCase
         $config->set('weiboToPp.hashTag', 'coding');
 
         $this->assertFalse(
-            $this->reflectionCall($weiboToPp, 'isSuitable', [''])
+            $this->reflectionCall($weiboToPp, 'isSuitable', ['', []])
+        );
+        // Empty body does not match hash tag
+        $this->assertFalse(
+            $this->reflectionCall($weiboToPp, 'isSuitable', ['', ['img path']])
         );
         $this->assertFalse(
-            $this->reflectionCall($weiboToPp, 'isSuitable', ['foo bar'])
+            $this->reflectionCall($weiboToPp, 'isSuitable', ['foo bar', []])
         );
         $this->assertFalse(
-            $this->reflectionCall($weiboToPp, 'isSuitable', ['foo #codingbar'])
+            $this->reflectionCall($weiboToPp, 'isSuitable', ['foo #codingbar', []])
         );
         $this->assertTrue(
-            $this->reflectionCall($weiboToPp, 'isSuitable', ['foo #coding bar'])
+            $this->reflectionCall($weiboToPp, 'isSuitable', ['foo #coding bar', []])
         );
         $this->assertTrue(
-            $this->reflectionCall($weiboToPp, 'isSuitable', ['foo #coding#'])
+            $this->reflectionCall($weiboToPp, 'isSuitable', ['foo #coding#', []])
         );
 
         $config->set('weiboToPp.hashTag', '');
         $this->assertTrue(
-            $this->reflectionCall($weiboToPp, 'isSuitable', ['foo bar'])
+            $this->reflectionCall($weiboToPp, 'isSuitable', ['foo bar', []])
+        );
+        $this->assertTrue(
+            $this->reflectionCall($weiboToPp, 'isSuitable', ['', ['img path']])
         );
     }
 

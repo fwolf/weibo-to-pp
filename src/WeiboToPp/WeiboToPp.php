@@ -50,12 +50,13 @@ class WeiboToPp
     /**
      * Is message suit for send to pp ?
      *
-     * @param   string  $body
+     * @param   string      $body
+     * @param   string[]    $images
      * @return  bool
      */
-    protected function isSuitable($body)
+    protected function isSuitable($body, array $images)
     {
-        if (empty($body)) {
+        if (empty($body) && empty($images)) {
             return false;
         }
 
@@ -75,10 +76,10 @@ class WeiboToPp
     {
         $receiver = $this->createReceiver()->receive();
         $body = $receiver->getBody();
+        $images = $receiver->getImages();
 
-        if ($this->isSuitable($body)) {
+        if ($this->isSuitable($body, $images)) {
             $body = $this->decorate($body);
-            $images = $receiver->getImages();
 
             $poster = $this->createPoster();
             $poster->post($body, $images);
