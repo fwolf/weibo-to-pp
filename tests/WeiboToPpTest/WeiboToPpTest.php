@@ -12,6 +12,10 @@ use PHPUnit_Framework_MockObject_MockObject as MockObject;
  */
 class WeiboToPpTest extends PHPUnitTestCase
 {
+    /** @var array */
+    protected static $hashTagConfigBackup = [];
+
+
     /**
      * @return MockObject|WeiboToPp
      */
@@ -26,12 +30,57 @@ class WeiboToPpTest extends PHPUnitTestCase
     }
 
 
+    public static function setUpBeforeClass()
+    {
+        $config = GlobalConfig::getInstance();
+        self::$hashTagConfigBackup = $config->get('weiboToPp.hashTag');
+    }
+
+
+    public static function tearDownAfterClass()
+    {
+        $config = GlobalConfig::getInstance();
+        $config->set('weiboToPp.hashTag', self::$hashTagConfigBackup);
+    }
+
+
+    public function testDecorate()
+    {
+        $weiboToPp = $this->buildMock();
+
+        $config = GlobalConfig::getInstance();
+        $config->set('weiboToPp.hashTag', 'coding');
+
+        $this->assertEquals(
+            '',
+            $this->reflectionCall($weiboToPp, 'decorate', [''])
+        );
+        $this->assertEquals(
+            'foo bar',
+            $this->reflectionCall($weiboToPp, 'decorate', ['foo bar'])
+        );
+        $this->assertEquals(
+            'foo bar',
+            $this->reflectionCall($weiboToPp, 'decorate', ['foo #coding bar'])
+        );
+        $this->assertEquals(
+            'foo  bar',
+            $this->reflectionCall($weiboToPp, 'decorate', ['foo #coding# bar'])
+        );
+
+        $config->set('weiboToPp.hashTag', '');
+        $this->assertEquals(
+            'foo #bar',
+            $this->reflectionCall($weiboToPp, 'decorate', ['foo #bar'])
+        );
+    }
+
+
     public function testIsSuitable()
     {
         $weiboToPp = $this->buildMock();
 
         $config = GlobalConfig::getInstance();
-        $hashTagBackup = $config->get('weiboToPp.hashTag');
         $config->set('weiboToPp.hashTag', 'coding');
 
         $this->assertFalse(
@@ -54,7 +103,5 @@ class WeiboToPpTest extends PHPUnitTestCase
         $this->assertTrue(
             $this->reflectionCall($weiboToPp, 'isSuitable', ['foo bar'])
         );
-
-        $config->set('weiboToPp.hashTag', $hashTagBackup);
     }
 }

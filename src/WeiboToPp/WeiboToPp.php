@@ -12,6 +12,24 @@ use Fwlib\Config\GlobalConfig;
 class WeiboToPp
 {
     /**
+     * Do some modify before post body
+     *
+     * @param   string  $body
+     * @return  string
+     */
+    protected function decorate($body)
+    {
+        $hashTag = GlobalConfig::getInstance()->get('weiboToPp.hashTag');
+
+        if (!empty($hashTag)) {
+            $body = preg_replace("/#{$hashTag}[ #]/", '', $body);
+        }
+
+        return $body;
+    }
+
+
+    /**
      * Is message suit for send to pp ?
      *
      * @param   string  $body
