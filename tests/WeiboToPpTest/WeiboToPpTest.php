@@ -2,6 +2,8 @@
 namespace FwolfTest\Bin\WeiboToPp;
 
 use Fwlib\Config\GlobalConfig;
+use Fwolf\Bin\WeiboToPp\Poster;
+use Fwolf\Bin\WeiboToPp\Receiver;
 use Fwolf\Bin\WeiboToPp\WeiboToPp;
 use Fwolf\Wrapper\PHPUnit\PHPUnitTestCase;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
@@ -17,13 +19,14 @@ class WeiboToPpTest extends PHPUnitTestCase
 
 
     /**
-     * @return MockObject|WeiboToPp
+     * @param   string[]    $methods
+     * @return  MockObject|WeiboToPp
      */
-    protected function buildMock()
+    protected function buildMock(array $methods = null)
     {
         $mock = $this->getMock(
             WeiboToPp::class,
-            null
+            $methods
         );
 
         return $mock;
@@ -41,6 +44,22 @@ class WeiboToPpTest extends PHPUnitTestCase
     {
         $config = GlobalConfig::getInstance();
         $config->set('weiboToPp.hashTag', self::$hashTagConfigBackup);
+    }
+
+
+    public function test()
+    {
+        $weiboToPp = $this->buildMock();
+
+        $this->assertInstanceOf(
+            Poster::class,
+            $this->reflectionCall($weiboToPp, 'createPoster')
+        );
+
+        $this->assertInstanceOf(
+            Receiver::class,
+            $this->reflectionCall($weiboToPp, 'createReceiver')
+        );
     }
 
 
@@ -103,5 +122,35 @@ class WeiboToPpTest extends PHPUnitTestCase
         $this->assertTrue(
             $this->reflectionCall($weiboToPp, 'isSuitable', ['foo bar'])
         );
+    }
+
+
+    public function testMain()
+    {
+        $weiboToPp = $this->buildMock(
+            ['createPoster', 'createReceiver', 'isSuitable']
+        );
+
+        $poster = $this->getMock(Poster::class, []);
+        $weiboToPp->expects($this->once())
+            ->method('createPoster')
+            ->willReturn($poster);
+
+        $receiver = $this->getMock(Receiver::class, ['getBody', 'getImages']);
+        $receiver->expects($this->once())
+            ->method('getBody')
+            ->willReturn('body');
+        $receiver->expects($this->once())
+            ->method('getImages')
+            ->willReturn([]);
+        $weiboToPp->expects($this->once())
+            ->method('createReceiver')
+            ->willReturn($receiver);
+
+        $weiboToPp->expects($this->once())
+            ->method('isSuitable')
+            ->willReturn(true);
+
+        $weiboToPp->main();
     }
 }

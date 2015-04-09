@@ -12,6 +12,24 @@ use Fwlib\Config\GlobalConfig;
 class WeiboToPp
 {
     /**
+     * @return  Poster
+     */
+    protected function createPoster()
+    {
+        return new Poster();
+    }
+
+
+    /**
+     * @return  Receiver
+     */
+    protected function createReceiver()
+    {
+        return new Receiver();
+    }
+
+
+    /**
      * Do some modify before post body
      *
      * @param   string  $body
@@ -47,5 +65,23 @@ class WeiboToPp
         }
 
         return true;
+    }
+
+
+    /**
+     * Main function
+     */
+    public function main()
+    {
+        $receiver = $this->createReceiver()->receive();
+        $body = $receiver->getBody();
+
+        if ($this->isSuitable($body)) {
+            $body = $this->decorate($body);
+            $images = $receiver->getImages();
+
+            $poster = $this->createPoster();
+            $poster->post($body, $images);
+        }
     }
 }
