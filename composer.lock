@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0ce448198bff267f50fdb76c809816b0",
+    "hash": "5fd5b89b34c293305278a36d87189778",
     "packages": [
         {
             "name": "fwlib/fwlib",
@@ -54,16 +54,16 @@
         },
         {
             "name": "fwolf/coding-client",
-            "version": "v0.2.1",
+            "version": "v0.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fwolf/coding-client-php.git",
-                "reference": "c80bdbf2a59a46194f3caa1780aba041690bbaa4"
+                "reference": "c3421035f08e38a5b7b1d3a5857ac9ceaa5de84e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fwolf/coding-client-php/zipball/c80bdbf2a59a46194f3caa1780aba041690bbaa4",
-                "reference": "c80bdbf2a59a46194f3caa1780aba041690bbaa4",
+                "url": "https://api.github.com/repos/fwolf/coding-client-php/zipball/c3421035f08e38a5b7b1d3a5857ac9ceaa5de84e",
+                "reference": "c3421035f08e38a5b7b1d3a5857ac9ceaa5de84e",
                 "shasum": ""
             },
             "require": {
@@ -91,7 +91,7 @@
                 }
             ],
             "description": "PHP Client of Coding.net",
-            "time": "2015-04-09 17:03:45"
+            "time": "2015-04-10 05:12:24"
         }
     ],
     "packages-dev": [

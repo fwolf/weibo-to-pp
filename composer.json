@@ -21,7 +21,7 @@
     "require": {
         "php": ">=5.5",
         "fwlib/fwlib": "dev-master",
-        "fwolf/coding-client": "^0.2"
+        "fwolf/coding-client": "^0.2.2"
     },
     "require-dev": {
         "fwolf/phpunit-wrapper": "^1.0"
