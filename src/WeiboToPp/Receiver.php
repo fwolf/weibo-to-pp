@@ -141,6 +141,7 @@ class Receiver
 
         $handle = $curl->getHandle();
         curl_setopt($handle, CURLOPT_HEADER, true);
+        curl_setopt($handle, CURLOPT_FOLLOWLOCATION, false);
 
         $result = $curl->get($url);
 
