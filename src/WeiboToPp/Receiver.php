@@ -150,7 +150,7 @@ class Receiver
 
         $location = $curl->match("/\nLocation: (.*?)\n/", $header);
 
-        return $location;
+        return trim($location);
     }
 
 
