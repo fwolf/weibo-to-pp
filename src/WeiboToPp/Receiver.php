@@ -1,6 +1,7 @@
 <?php
 namespace Fwolf\Bin\WeiboToPp;
 
+use Fwlib\Net\Curl;
 use Fwlib\Util\UtilContainerAwareTrait;
 
 /**
@@ -23,6 +24,11 @@ class Receiver
      */
     protected $contents = [];
 
+    /**
+     * @var Curl
+     */
+    protected $curl = null;
+
 
     /**
      * Get weibo body
@@ -34,6 +40,32 @@ class Receiver
         $arrayUtil = $this->getUtilContainer()->getArray();
 
         return $arrayUtil->getIdx($this->contents, 'subject');
+    }
+
+
+    /**
+     * @return  Curl
+     */
+    protected function getCurl()
+    {
+        if (is_null($this->curl)) {
+            $this->curl = new Curl();
+        }
+
+        return $this->curl;
+    }
+
+
+    /**
+     * Call {@see curl_getinfo()} on handle
+     *
+     * @param   resource    $handle
+     * @param   int         $option
+     * @return  int
+     */
+    protected function getCurlInfo($handle, $option)
+    {
+        return curl_getinfo($handle, $option);
     }
 
 
@@ -78,7 +110,46 @@ class Receiver
      */
     public function getImagesFromIfttt()
     {
+        $arrayUtil = $this->getUtilContainer()->getArray();
+        $plainBody = $arrayUtil->getIdx($this->contents, 'body-plain', '');
+
+        $curl = $this->getCurl();
+        $iftttMailUrl = $curl->match('/^<img src="([^"]+)" /', $plainBody);
+
+        if (!empty($iftttMailUrl)) {
+            $iftttJumpUrl = $this->getLocationHeader($iftttMailUrl);
+            $weiboImgUrl = $this->getLocationHeader($iftttJumpUrl);
+
+            if (!empty($weiboImgUrl)) {
+                return [$weiboImgUrl];
+            }
+        }
+
         return [];
+    }
+
+
+    /**
+     * Get HTTP Location header
+     *
+     * @param   string  $url
+     * @return  string
+     */
+    protected function getLocationHeader($url)
+    {
+        $curl = $this->getCurl();
+
+        $handle = $curl->getHandle();
+        curl_setopt($handle, CURLOPT_HEADER, true);
+
+        $result = $curl->get($url);
+
+        $headerSize = $this->getCurlInfo($handle, CURLINFO_HEADER_SIZE);
+        $header = substr($result, 0, $headerSize);
+
+        $location = $curl->match("/\nLocation: (.*?)\n/", $header);
+
+        return $location;
     }
 
 
