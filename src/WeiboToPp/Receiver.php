@@ -44,6 +44,19 @@ class Receiver
      */
     public function getImages()
     {
+        return $this->isMailFromIfttt()
+            ? $this->getImagesFromIfttt()
+            : $this->getImagesFromGmail();
+    }
+
+
+    /**
+     * Get attached images sent from gmail to mailgun
+     *
+     * @return  string[]
+     */
+    public function getImagesFromGmail()
+    {
         $arrayUtil = $this->getUtilContainer()->getArray();
         $attachCount =
             $arrayUtil->getIdx($this->contents, 'attachment-count', 0);
@@ -55,6 +68,31 @@ class Receiver
         }
 
         return $images;
+    }
+
+
+    /**
+     * Get attached images sent from IFTTT mail to mailgun
+     *
+     * @return  string[]
+     */
+    public function getImagesFromIfttt()
+    {
+        return [];
+    }
+
+
+    /**
+     * Mail is send from IFTTT
+     *
+     * @return  bool
+     */
+    protected function isMailFromIfttt()
+    {
+        $arrayUtil = $this->getUtilContainer()->getArray();
+        $from = $arrayUtil->getIdx($this->contents, 'from', '');
+
+        return '@ifttt.com>' == substr($from, -11);
     }
 
 

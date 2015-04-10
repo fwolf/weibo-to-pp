@@ -29,12 +29,12 @@ class ReceiverTest extends PHPUnitTestCase
     }
 
 
-    public function testGetImages()
+    public function testGetImagesFromGmail()
     {
         $receiver = $this->buildMock();
 
         $_FILES = [];
-        $this->assertEmpty($receiver->getImages());
+        $this->assertEmpty($receiver->getImagesFromGmail());
 
         $this->reflectionSet($receiver, 'contents', ['attachment-count' => 2]);
         $_FILES = [
@@ -56,10 +56,34 @@ class ReceiverTest extends PHPUnitTestCase
 
         $this->assertEqualArray(
             ['/tmp/1', '/tmp/2'],
-            $receiver->getImages()
+            $receiver->getImagesFromGmail()
         );
 
         $_FILES = [];
+    }
+
+
+    public function testIsMailFromIfttt()
+    {
+        $receiver = $this->buildMock();
+
+        $this->reflectionSet(
+            $receiver,
+            'contents',
+            ['from' => 'somebody@gmail.com']
+        );
+        $this->assertFalse(
+            $this->reflectionCall($receiver, 'isMailFromIfttt')
+        );
+
+        $this->reflectionSet(
+            $receiver,
+            'contents',
+            ['from' => 'IFTTT Action <action@ifttt.com>']
+        );
+        $this->assertTrue(
+            $this->reflectionCall($receiver, 'isMailFromIfttt')
+        );
     }
 
 
