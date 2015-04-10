@@ -54,16 +54,16 @@
         },
         {
             "name": "fwolf/coding-client",
-            "version": "v0.2.2",
+            "version": "v0.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/fwolf/coding-client-php.git",
-                "reference": "c3421035f08e38a5b7b1d3a5857ac9ceaa5de84e"
+                "reference": "6b1b72e7d2d2d022fba9effe2a63688952f1478e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fwolf/coding-client-php/zipball/c3421035f08e38a5b7b1d3a5857ac9ceaa5de84e",
-                "reference": "c3421035f08e38a5b7b1d3a5857ac9ceaa5de84e",
+                "url": "https://api.github.com/repos/fwolf/coding-client-php/zipball/6b1b72e7d2d2d022fba9effe2a63688952f1478e",
+                "reference": "6b1b72e7d2d2d022fba9effe2a63688952f1478e",
                 "shasum": ""
             },
             "require": {
@@ -91,7 +91,7 @@
                 }
             ],
             "description": "PHP Client of Coding.net",
-            "time": "2015-04-10 05:12:24"
+            "time": "2015-04-10 10:24:35"
         }
     ],
     "packages-dev": [
