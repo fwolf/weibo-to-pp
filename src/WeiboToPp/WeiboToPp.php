@@ -79,8 +79,6 @@ class WeiboToPp
         $images = $receiver->getImages();
 
         if ($this->isSuitable($body, $images)) {
-            $body = $this->decorate($body);
-
             $poster = $this->createPoster();
             $poster->post($body, $images);
         }
